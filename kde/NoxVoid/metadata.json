@@ -1,0 +1,19 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "",
+                "Name": "pebrd"
+            }
+        ],
+        "Description": "VOID Design System — KDE Plasma theme. Pure black base, brutalist, no rounded corners. Accent: #A8B0BC.",
+        "Id": "NoxVoid",
+        "License": "",
+        "Name": "Nox Void",
+        "Website": "https://github.com/pebrd/nox"
+    },
+    "Keywords": "Desktop;Workspace;Appearance;Look and Feel;Dark;Brutalist;",
+    "X-Plasma-APIVersion": "2",
+    "X-Plasma-MainScript": "default"
+}

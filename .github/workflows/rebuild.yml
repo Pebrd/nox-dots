@@ -1,0 +1,32 @@
+name: Rebuild themes
+
+on:
+  repository_dispatch:
+    types: [nox-tokens-updated]
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout nox-dots
+        uses: actions/checkout@v4
+
+      - name: Fetch nox dist/css/nox-tokens.css
+        run: |
+          curl -fsSL \
+            "https://raw.githubusercontent.com/pebrd/nox/${{ github.event.client_payload.nox_ref }}/dist/css/nox-tokens.css" \
+            -o nox-tokens.css
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate themes
+        run: node generate.mjs nox-tokens.css
+
+      - name: Commit & push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: sync tokens from pebrd/nox@${{ github.event.client_payload.nox_sha }}"
+          commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"

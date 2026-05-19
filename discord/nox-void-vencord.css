@@ -1,0 +1,102 @@
+/**
+ * @name Nox Void
+ * @description VOID Design System theme for Discord. Pure black, brutalist.
+ * @author pebrd
+ *
+ * Auto-generated from github.com/pebrd/nox — do not edit directly
+ * REQUISITO: Discord → Apariencia → Default Themes → Onyx
+ */
+
+.theme-midnight {
+    --background-base-lowest:  #000000 !important;
+    --background-base-lower:   #000000 !important;
+    --background-base-low:     #0a0a0a !important;
+    --background-base-medium:  #161616 !important;
+    --background-base-high:    #1a1a1a !important;
+    --background-base-higher:  #1a1a1a !important;
+    --background-base-highest: #1a1a1a !important;
+
+    --background-surface-low:     #0a0a0a !important;
+    --background-surface-high:    #161616 !important;
+    --background-surface-higher:  #1a1a1a !important;
+    --background-surface-highest: #1a1a1a !important;
+
+    --background-mod-muted:    rgba(255,255,255,0.04) !important;
+    --background-mod-subtle:   rgba(255,255,255,0.06) !important;
+    --background-mod-normal:   rgba(255,255,255,0.08) !important;
+    --background-mod-strong:   rgba(255,255,255,0.12) !important;
+
+    --message-background-hover: rgba(255,255,255,0.02) !important;
+
+    --border-faint:     rgba(168,176,188,0.06) !important;
+    --border-subtle:    rgba(168,176,188,0.10) !important;
+    --border-muted:     rgba(168,176,188,0.14) !important;
+    --border-normal:    rgba(168,176,188,0.20) !important;
+    --border-strong:    rgba(168,176,188,0.30) !important;
+    --app-frame-border: rgba(168,176,188,0.10) !important;
+
+    --text-normal:        #ffffff !important;
+    --text-muted:         #808080 !important;
+    --text-link:          #a8b0bc !important;
+    --header-primary:     #ffffff !important;
+    --header-secondary:   #aaaaaa !important;
+    --interactive-normal: #808080 !important;
+    --interactive-hover:  #ffffff !important;
+    --interactive-active: #ffffff !important;
+    --interactive-muted:  #aaaaaa !important;
+
+    --channels-default:              #808080 !important;
+    --channel-icon:                  #aaaaaa !important;
+    --channel-text-area-placeholder: #aaaaaa !important;
+
+    --input-background:       #0a0a0a !important;
+    --input-border:           rgba(168,176,188,0.14) !important;
+    --input-placeholder-text: #aaaaaa !important;
+
+    --brand-500:            #a8b0bc !important;
+    --brand-experiment:     #a8b0bc !important;
+    --brand-experiment-500: #a8b0bc !important;
+    --brand-experiment-560: #a8b0bc !important;
+    --focus-primary:        #a8b0bc !important;
+
+    --mention-foreground: #a8b0bc !important;
+    --mention-background: rgba(168,176,188,0.07) !important;
+
+    --scrollbar-auto-thumb:                 #1a1a1a !important;
+    --scrollbar-auto-track:                 #000000 !important;
+    --scrollbar-auto-scrollbar-color-thumb: #1a1a1a !important;
+    --scrollbar-thin-thumb:                 #1a1a1a !important;
+
+    --legacy-elevation-low:    none !important;
+    --legacy-elevation-medium: none !important;
+    --legacy-elevation-high:   none !important;
+    --legacy-elevation-border: none !important;
+
+    --status-danger:   #c87070 !important;
+    --status-positive: #6A9870 !important;
+
+    --radius-xs:    0px !important;
+    --radius-sm:    0px !important;
+    --radius-md:    0px !important;
+    --radius-lg:    0px !important;
+    --radius-xl:    0px !important;
+    --radius-xxl:   0px !important;
+    --radius-round: 0px !important;
+
+    --opacity-4:  rgba(168,176,188,0.04);
+    --opacity-8:  rgba(168,176,188,0.08);
+    --opacity-12: rgba(168,176,188,0.12);
+    --opacity-16: rgba(168,176,188,0.16);
+    --opacity-20: rgba(168,176,188,0.20);
+    --opacity-24: rgba(168,176,188,0.24);
+}
+
+.theme-midnight *:not([class*="avatar"]):not([class*="status"]):not([class*="dot"]):not([class*="badge"]):not(circle):not(ellipse) {
+    border-radius: 0 !important;
+}
+.theme-midnight [class*="avatar"],
+.theme-midnight [class*="Avatar"] {
+    border-radius: 50% !important;
+}
+.theme-midnight code { border-radius: 0 !important; }
+.theme-midnight button:not([class*="avatar"]) { border-radius: 0 !important; }
