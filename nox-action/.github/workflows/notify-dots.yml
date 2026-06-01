@@ -1,0 +1,23 @@
+name: Notify nox-dots
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dist/**'
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger nox-dots rebuild
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.NOX_DOTS_PAT }}
+          repository: pebrd/nox-dots
+          event-type: nox-tokens-updated
+          client-payload: |
+            {
+              "nox_sha": "${{ github.sha }}",
+              "nox_ref": "${{ github.ref_name }}"
+            }

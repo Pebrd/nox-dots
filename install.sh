@@ -7,11 +7,29 @@
 #
 set -euo pipefail
 
-# Redirigir stdin a la terminal para poder leer input aunque el script
-# se ejecute via pipe (curl ... | bash).
-if [ -e /dev/tty ]; then
-    exec </dev/tty
+# ── entrada interactiva ────────────────────────────────────
+# En curl | bash el stdin viene del pipe. Detectar si tenemos terminal.
+if [ -t 0 ]; then
+    _TTY=""
+elif [ -e /dev/tty ]; then
+    _TTY="/dev/tty"
+else
+    echo "[!] Este script necesita una terminal interactiva." >&2
+    echo "    Descartgalo y ejecutalo localmente:" >&2
+    echo "      curl -fsSL https://raw.githubusercontent.com/pebrd/nox-dots/main/install.sh -o /tmp/nox-install.sh" >&2
+    echo "      bash /tmp/nox-install.sh" >&2
+    exit 1
 fi
+
+read_input() {
+    local prompt="$1" var="$2" line
+    if [ -n "$_TTY" ]; then
+        IFS= read -rp "$prompt" line <"$_TTY"
+    else
+        IFS= read -rp "$prompt" line
+    fi
+    printf -v "$var" "%s" "$line"
+}
 
 REPO="https://raw.githubusercontent.com/pebrd/nox-dots/main"
 TMPDIR=$(mktemp -d)
@@ -19,7 +37,7 @@ trap 'rm -rf "$TMPDIR"' EXIT
 
 confirm() {
     local msg="$1" resp
-    read -rp "${msg} (s/N): " resp
+    read_input "${msg} (s/N):" resp
     [[ "$resp" =~ ^[sSyY] ]]
 }
 
@@ -167,7 +185,7 @@ echo "  5. Todos"
 echo "  0. Salir"
 echo ""
 
-read -rp "Opcion: " opt_raw
+read_input "Opcion" opt_raw
 
 # normalizar: comas -> espacios, trim
 opt=$(echo "$opt_raw" | tr ',' ' ' | xargs)
