@@ -1,10 +1,20 @@
 # nox-dots
 
-Dotfiles y temas para aplicaciones, basados en la paleta del [VOID Design System](https://github.com/pebrd/nox).
+Dotfiles y temas para aplicaciones, basados en los tokens del [NOX Design System](https://github.com/pebrd/nox).
 
 ```
 negro puro como base — cero border-radius — acento #A8B0BC
 ```
+
+---
+
+## Instalacion rapida
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/pebrd/nox-dots/main/install.sh | bash
+```
+
+Te abre un menu para elegir que tema instalar: Discord, Firefox/LibreWolf, KDE, Kitty, o todos.
 
 ---
 
@@ -24,17 +34,43 @@ negro puro como base — cero border-radius — acento #A8B0BC
 
 ## Temas
 
+### Discord / Vencord (`discord/`)
+
+Tema CSS para [Vencord](https://github.com/Vendicated/Vencord).
+
+**Requisito:** Discord → Apariencia → Default Themes → **Onyx**
+
+**Instalacion manual:**
+```
+Vencord → Settings → Themes → Open Themes Folder → copiar nox-void-vencord.css → activar
+```
+
+---
+
+### Firefox / LibreWolf (`firefox/`)
+
+Tema [Cascade](https://github.com/andreasgrafen/cascade) con colores NOX.
+
+**Instalacion manual:**
+```bash
+# Copiar la carpeta chrome/ al perfil de Firefox/LibreWolf
+cp -r firefox/chrome ~/.librewolf/<tu-perfil>/
+cp -r firefox/chrome ~/.mozilla/firefox/<tu-perfil>/
+# Reiniciar el navegador
+```
+
+---
+
 ### KDE Plasma (`kde/`)
 
 Look and Feel completo con color scheme propio.
 
-**Instalación:**
-
+**Instalacion manual:**
 ```bash
-# Instalar el color scheme
+# Color scheme
 cp kde/NoxVoid/contents/colors/NoxVoid.colors ~/.local/share/color-schemes/
 
-# Instalar el Look and Feel
+# Look and Feel completo
 cp -r kde/NoxVoid ~/.local/share/plasma/look-and-feel/
 
 # Aplicar
@@ -44,39 +80,20 @@ plasma-apply-colorscheme NoxVoid
 
 ---
 
-### Discord / Vencord (`discord/`)
-
-Tema CSS para [Vencord](https://github.com/Vendicated/Vencord).
-
-**Requisito:** Discord → Apariencia → Default Themes → **Onyx**
-
-**Instalación:**
-
-```
-Vencord → Settings → Themes → Open Themes Folder → copiar nox-void-vencord.css → activar
-```
-
----
-
 ### Kitty (`kitty/`)
 
 Tema de colores para la terminal [kitty](https://sw.kovidgoyal.net/kitty/).
 
-**Instalación:**
-
+**Instalacion manual:**
 ```bash
-# Opción A — como tema nombrado
 mkdir -p ~/.config/kitty/themes
 cp kitty/nox-void.conf ~/.config/kitty/themes/
 # Agregar a kitty.conf:
-# include themes/nox-void.conf
-
-# Opción B — directo al final de kitty.conf
-cat kitty/nox-void.conf >> ~/.config/kitty/kitty.conf
+echo "include themes/nox-void.conf" >> ~/.config/kitty/kitty.conf
 ```
 
 ---
 
 ## Fuente de tokens
 
-Los colores vienen de [`pebrd/nox`](https://github.com/pebrd/nox) en formato W3C DTCG. Si el acento cambia ahí, actualizarlo acá manualmente en cada tema.
+Los colores y temas se generan automaticamente desde los tokens de [`pebrd/nox`](https://github.com/pebrd/nox). Cuando los tokens se actualizan, los temas se regeneran solos via GitHub Actions.
