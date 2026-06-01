@@ -3,6 +3,12 @@ name: Rebuild themes
 on:
   repository_dispatch:
     types: [nox-tokens-updated]
+  workflow_dispatch:
+    inputs:
+      nox_ref:
+        description: 'Branch/tag of pebrd/nox to pull CSS from'
+        default: 'main'
+        required: false
 
 jobs:
   rebuild:
@@ -13,8 +19,9 @@ jobs:
 
       - name: Fetch nox dist/css/nox-tokens.css
         run: |
+          NOX_REF="${{ github.event.client_payload.nox_ref || inputs.nox_ref || 'main' }}"
           curl -fsSL \
-            "https://raw.githubusercontent.com/pebrd/nox/${{ github.event.client_payload.nox_ref }}/dist/css/nox-tokens.css" \
+            "https://raw.githubusercontent.com/pebrd/nox/${NOX_REF}/dist/css/nox-tokens.css" \
             -o nox-tokens.css
 
       - name: Setup Node
@@ -28,5 +35,5 @@ jobs:
       - name: Commit & push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: sync tokens from pebrd/nox@${{ github.event.client_payload.nox_sha }}"
+          commit_message: "chore: sync tokens from pebrd/nox@${{ github.event.client_payload.nox_sha || inputs.nox_ref || 'main' }}"
           commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
