@@ -7,27 +7,22 @@
 #
 set -euo pipefail
 
+# Redirigir stdin a la terminal para poder leer input aunque el script
+# se ejecute via pipe (curl ... | bash).
+if [ -e /dev/tty ]; then
+    exec </dev/tty
+fi
+
 REPO="https://raw.githubusercontent.com/pebrd/nox-dots/main"
 TMPDIR=$(mktemp -d)
 trap 'rm -rf "$TMPDIR"' EXIT
 
-# ── read desde terminal (funciona con pipes) ──────────────
-read_term() {
-    local var="$1" prompt="$2"
-    if [ -e /dev/tty ]; then
-        read -rp "$prompt" "$var" </dev/tty
-    else
-        read -rp "$prompt" "$var"
-    fi
-}
-
 confirm() {
     local msg="$1" resp
-    read -rp "${msg} (s/N): " resp </dev/tty
+    read -rp "${msg} (s/N): " resp
     [[ "$resp" =~ ^[sSyY] ]]
 }
 
-# ── fetch ─────────────────────────────────────────────────
 fetch() {
     local path="$1" out="$2"
     curl -fsSL "$REPO/$path" -o "$out"
@@ -79,7 +74,7 @@ install_firefox() {
         return
     fi
 
-    echo "[+] Perfil: ${browser} → $(basename "$profile_dir")"
+    echo "[+] Perfil: ${browser} -> $(basename "$profile_dir")"
 
     mkdir -p "$TMPDIR/chrome/includes"
     for f in \
@@ -158,7 +153,7 @@ install_kitty() {
 
 echo ""
 echo "╔══════════════════════════════════════════╗"
-echo "║         Nox Void — Theme Installer       ║"
+echo "║         Nox Void - Theme Installer       ║"
 echo "║   github.com/pebrd/nox-dots              ║"
 echo "╚══════════════════════════════════════════╝"
 echo ""
@@ -172,33 +167,18 @@ echo "  5. Todos"
 echo "  0. Salir"
 echo ""
 
-read_term opt_raw "Opcion: "
+read -rp "Opcion: " opt_raw
 
-# normalizar input: reemplazar comas por espacios, trim
+# normalizar: comas -> espacios, trim
 opt=$(echo "$opt_raw" | tr ',' ' ' | xargs)
 
-# si esta vacio, salir
 if [ -z "$opt" ]; then
     echo "[!] No seleccionaste nada"
     exit 1
 fi
 
-# armar lista de funciones a ejecutar
 run_all=false
-has_install=false
 
-install_item() {
-    local n="$1"
-    case "$n" in
-        1) install_discord ;;
-        2) install_firefox ;;
-        3) install_kde ;;
-        4) install_kitty ;;
-        *) echo "[-] Opcion invalida: $n" ;;
-    esac
-}
-
-# procesar cada opcion
 for token in $opt; do
     if [ "$token" = "0" ]; then
         echo "[*] Chau!"
@@ -206,8 +186,6 @@ for token in $opt; do
     elif [ "$token" = "5" ]; then
         run_all=true
         break
-    else
-        has_install=true
     fi
 done
 
@@ -216,9 +194,15 @@ if $run_all; then
     install_firefox
     install_kde
     install_kitty
-elif $has_install; then
+else
     for token in $opt; do
-        install_item "$token"
+        case "$token" in
+            1) install_discord ;;
+            2) install_firefox ;;
+            3) install_kde ;;
+            4) install_kitty ;;
+            *) echo "[-] Opcion invalida: $token" ;;
+        esac
     done
 fi
 
