@@ -80,7 +80,7 @@ install_firefox() {
 
     local profile_dir="" browser=""
 
-    for d in "$HOME/.librewolf/"*.default-*/; do
+    for d in "$HOME/.librewolf/"*.default-*/ "$HOME/.librewolf/"*.default/; do
         if [ -d "$d" ]; then profile_dir="$d"; browser="librewolf"; break; fi
     done
 
